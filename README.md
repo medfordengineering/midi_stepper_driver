@@ -1,2 +1,7 @@
 # midi_stepper_driver
 This is project used to drive stepper motors using MIDI files
+Over the past couple of days, I was able to wire up an Arduino that can accept a standard MIDI file over serial and drive four stepper motors (I don't have the floppies at home) based on the notes in the file. The software is fairly rudimentary at this point. It takes advantage of a MIDI library designed for Arduino which does almost all the work parsing notes, channels and tracks. I set up a 10us resolution interrupt to drive the four motors. I also converted each of 127 MIDI notes to a relative period in preprocessing to avoid taxing the Arduino with any heavy math. 
+
+I dealt with the problem of overlapping notes by simply requiring that all MIDI files are human preprocessed, so that all overlapping notes are in separate channels. It would be easy to convert this to tracks, but channels work for now. Also, as I began to work on the project, I began to think that processing the MIDI files into channels designed for steppers, or floppies, or relays could be fun and creative work. Note that the MIDI files I included came from another project which was designed for four steppers.
+
+On the Linux side, I just use ttymidi which creates a midi serial port from a command line interface. At this point anything that can send a MIDI file works. I wrote a very simple python program using the Mido library which does all the heavy lifting on the Linux side. 
